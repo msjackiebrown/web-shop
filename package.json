@@ -1,0 +1,20 @@
+{
+  "name": "web-shop",
+  "version": "1.0.0",
+  "description": "A simple web shop for the CI example.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://192.168.1.127/sample-projects/web-shop.git"
+  },
+  "author": "Jacqueline Brown",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.6.10",
+    "bootstrap": "^4.1.0",
+    "jquery": "^3.3.1"
+  }
+}
