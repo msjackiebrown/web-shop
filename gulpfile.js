@@ -17,7 +17,11 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     replace = require('gulp-replace');
 
+var browsers = gutil.env.browsers ? gutil.env.browsers.split(',') : undefined;
+
 gutil.log(gutil.colors.cyan('Environment: '), gutil.colors.blue(gutil.env.env));
+gutil.log(gutil.colors.cyan('Environment: '), gutil.colors.blue(browsers));
+
 gulp.task('clean', function () {
     del(['prod/*', 'scripts/bundles/*']);
 })
@@ -69,16 +73,16 @@ gulp.task('clean', function () {
         .pipe(replace('href="..\\"', 'href="'))
         .pipe(htmlreplace({
             css: [
-                'node_modules/bootstrap/dist/css/bootstrap.min.css',
-                'css/all.css'
+                '../../node_modules/bootstrap/dist/css/bootstrap.min.css',
+                '../css/all.css'
             ],
             node_modules: [
-                'node_modules/angular/angular.min.js',
-                'node_modules/jquery/dist/jquery.min.js',
-                'node_modules/bootstrap/dist/js/bootstrap.min.js'
+                '../../node_modules/angular/angular.min.js',
+                '../../node_modules/jquery/dist/jquery.min.js',
+                '../../node_modules/bootstrap/dist/js/bootstrap.min.js'
             ],
             js: {
-                src: 'scripts',
+                src: '../scripts',
                 tpl: '<script src="%s/%f.bundle.js"></script>'
             }
         }))
@@ -96,7 +100,10 @@ gulp.task('clean', function () {
 .task('test', ['build'], function (done) {
     new karma({
         configFile: __dirname + '/test/karma.conf.js',
-        singleRun: true
+        singleRun: true,
+        browsers: gutil.env.env === 'prod'
+            ? ['PhantomJS']
+            : undefined
     }, function (err) {
         if (err > 0) {
             return done(new gutil.PluginError('karma', 'Karma tests failed.'));
@@ -105,12 +112,10 @@ gulp.task('clean', function () {
     }).start();
 })
 .task('test-min', ['test'], function (done) {
-	new karma({
-		   configFile: __dirname + '/test/karma.min.conf.js',
-		   browsers: gutil.env.env === 'prod'
-		      ? ['PhantomJS']
-		      : undefined
-		}, function (err) {
+    new karma({
+        configFile: __dirname + '/test/karma.min.conf.js',
+        browsers: browsers
+    }, function (err) {
         if (err > 0) {
             return done(new gutil.PluginError('karma', 'Karma tests failed.'));
         }
@@ -121,6 +126,6 @@ gulp.task('clean', function () {
 .task('default', ['lint', 'test-min']);
 
 if (gutil.env.env !== 'prod') {
-gulp.watch(['css/*.css', 'views/*.html', 'index.html'], ['build']);
-gulp.watch('scripts/*.js', ['default']);
+    gulp.watch(['css/*.css', 'views/*.html', 'index.html'], ['build']);
+    gulp.watch('scripts/*.js', ['default']);
 }
