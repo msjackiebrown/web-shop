@@ -17,6 +17,7 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     replace = require('gulp-replace');
 
+gutil.log(gutil.colors.cyan('Environment: '), gutil.colors.blue(gutil.env.env));
 gulp.task('clean', function () {
     del(['prod/*', 'scripts/bundles/*']);
 })
@@ -116,5 +117,7 @@ gulp.task('clean', function () {
 .task('build', ['js', 'css', 'html'])
 .task('default', ['lint', 'test-min']);
 
+if (gutil.env.env !== 'prod') {
 gulp.watch(['css/*.css', 'views/*.html', 'index.html'], ['build']);
 gulp.watch('scripts/*.js', ['default']);
+}

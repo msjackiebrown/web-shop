@@ -1,6 +1,11 @@
 module.exports = function(config) {
   var istanbul = require('browserify-istanbul');
-
+  new karma({
+	   configFile: __dirname + '/test/karma.min.conf.js',
+	   browsers: gutil.env.env === 'prod'
+	      ? ['PhantomJS']
+	      : undefined
+	},
   config.set({
     basePath: '',
     frameworks: ['browserify', 'jasmine', 'mocha', 'chai'],
@@ -72,4 +77,7 @@ module.exports = function(config) {
         useBrowserName: true
     }
   });
+  
+
+ 
 };
