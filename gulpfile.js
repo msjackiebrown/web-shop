@@ -105,9 +105,12 @@ gulp.task('clean', function () {
     }).start();
 })
 .task('test-min', ['test'], function (done) {
-    new karma({
-        configFile: __dirname + '/test/karma.min.conf.js'
-    }, function (err) {
+	new karma({
+		   configFile: __dirname + '/test/karma.min.conf.js',
+		   browsers: gutil.env.env === 'prod'
+		      ? ['PhantomJS']
+		      : undefined
+		}, function (err) {
         if (err > 0) {
             return done(new gutil.PluginError('karma', 'Karma tests failed.'));
         }
