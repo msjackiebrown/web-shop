@@ -94,10 +94,8 @@ gulp
 				[ 'test' ],
 				function(done) {
 					new karma({
-						configFile : __dirname + '/test/karma.conf.js',
-						singleRun : true,
-						browsers : gutil.env.env === 'prod' ? [ 'PhantomJS' ]
-								: undefined
+					   configFile: __dirname + '/test/karma.min.conf.js',
+					   browsers: browsers
 					}, function(err) {
 						if (err > 0) {
 							return done(new gutil.PluginError('karma',

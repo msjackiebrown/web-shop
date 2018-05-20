@@ -31,11 +31,7 @@ exports.config = {
     seleniumServerPort: 4444,
     //seleniumAddress: 'http://localhost:4444/wd/hub',
     multiCapabilities: [{
-        browserName: 'chrome'
-    //}, {
-    //    browserName: 'MicrosoftEdge'
-    //}, {
-    //    browserName: 'firefox'
+       browserName: 'chrome'
     }]
     //directConnect: true
-};
+ };
