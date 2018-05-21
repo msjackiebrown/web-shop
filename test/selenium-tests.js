@@ -13,6 +13,10 @@ describe('Selenium tests', function () {
     });*/
     
     describe('homepage', function () {
+        beforeEach(function() {
+            originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+            jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+        });
         it('should cut off long titles', function () {
             browser.get('index.html');
             browser.wait(EC.presenceOf($('h3'), 1000));
